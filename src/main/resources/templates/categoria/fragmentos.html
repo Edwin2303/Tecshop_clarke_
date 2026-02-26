@@ -147,20 +147,17 @@
 
 <!-- 4 fragmento que se utiliza para confirmar que se desea eliminar una categoria -->
 <section th:fragment="confirmarEliminar">
-    <div class="modal fade" 
-         id="confirmModal" 
-         tabindex="-1" 
-         aria-labelledby="modalLabel" 
-         aria-hidden="true">
+    <div class="modal fade" id="confirmModal" tabindex="-1" 
+         aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered custom-modal-animation">
             <div class="modal-content animate-slide-up">
-                <form th:action="@{/categoria/eliminar}" th:object="${categoria}" method="post">
+                <form th:action="@{/categoria/eliminar}" method="post">
                     <input type="hidden" name="idCategoria" id="modalId"/>
                     <div class="modal-header bg-warning text-white">
                         <h5 class="modal-title" id="modalLabel">
                             <i class="fa-solid fa-circle-radiation"></i> [[#{accion.confirmar}]]
                         </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <p>[[#{accion.confirmar.texto1}]] <span id="modalDescripcion"></span>?</p>
@@ -178,4 +175,14 @@
             </div>
         </div>
     </div>
+    <script>
+        const confirmModal = document.getElementById('confirmModal');
+        confirmModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-bs-id');
+            const descripcion = button.getAttribute('data-bs-descripcion');
+            document.getElementById('modalId').value = id;
+            document.getElementById('modalDescripcion').textContent = descripcion;
+        });
+    </script>
 </section>
